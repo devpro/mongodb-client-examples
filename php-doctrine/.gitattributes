@@ -12,7 +12,6 @@
 *.yml text eol=lf
 bin/console text eol=lf
 bin/demo text eol=lf
-*.md text eol=lf
 
 *.ico binary
 *.png binary
