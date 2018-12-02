@@ -1,0 +1,52 @@
+#!/usr/bin/env php
+<?php
+
+use Doctrine\Common\Annotations\AnnotationRegistry;
+use Doctrine\ODM\MongoDB\Configuration;
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
+use MongoDB\Client;
+
+/** @var \Composer\Autoload\ClassLoader */
+$loader = require_once(dirname(__DIR__) . '/vendor/autoload.php');
+AnnotationRegistry::registerLoader([$loader, 'loadClass']);
+
+// local configuration
+$mongoDbUri = 'mongodb://127.0.0.1/';
+$mongoDbName = 'doctrine';
+
+$connection = new Client($mongoDbUri);
+
+$config = new Configuration();
+$config->setProxyDir(dirname(__DIR__) . '/src/Proxies');
+$config->setProxyNamespace('App\Proxies');
+$config->setHydratorDir(dirname(__DIR__) . '/src/Hydrators');
+$config->setHydratorNamespace('App\Hydrators');
+$config->setMetadataDriverImpl(AnnotationDriver::create(dirname(__DIR__).'/src/Entities'));
+$config->setDefaultDB($mongoDbName);
+
+$dm = DocumentManager::create($connection, $config);
+
+header('Content-Type: text/plain');
+
+// create a new user
+$user = new \App\Entities\User();
+$user->setName('Bulat S.');
+$user->setEmail('email@example.com');
+
+// tell Doctrine 2 to save $user on the next flush()
+$dm->persist($user);
+
+echo('New user created with Id=' . $user->getId() . PHP_EOL);
+
+// create a new blog post
+$post = new \App\Entities\BlogPost();
+$post->setTitle('My First Blog Post');
+$post->setBody('MongoDB + Doctrine 2 ODM = awesomeness!');
+$post->setCreatedAt(new DateTime());
+$user->addPost($post);
+
+// store everything to MongoDB
+$dm->flush();
+
+echo('New blogPost created with Id=' . $post->getId() . PHP_EOL);
