@@ -20,6 +20,7 @@ The code has been limited to the minimum to ease the understanding.
     - By default you can launch `docker run --name mongodb404 -d -p 27017:27017 mongo:4.0.4`
 - Run `php bin/demo`
     - This will create a new entry in User and BlogPost collections in `doctrine` (or another database name if you changed the value)
+    - You can review the data from Compass or MongoDB Shell
 
 ## History
 
