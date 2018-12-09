@@ -50,3 +50,14 @@ $user->addPost($post);
 $dm->flush();
 
 echo('New blogPost created with Id=' . $post->getId() . PHP_EOL);
+
+$existing = $dm
+    ->getRepository(\App\Entities\User::class)
+    ->find($user->getId());
+
+if (!$existing) {
+    echo('Cannot retrieve the user we just inserted in the database. Something\'s wrong...' . PHP_EOL);
+    die(1);
+}
+
+echo('User "' . $existing->getId() . ':' . $existing->getName() . '" retrieved successfully from the database' . PHP_EOL);

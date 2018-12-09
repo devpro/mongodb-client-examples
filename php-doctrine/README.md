@@ -9,18 +9,18 @@ The code has been limited to the minimum to ease the understanding.
 ## Setup
 
 - PHP >= 7.1 must be available from the command line
-    - Make sure the latest MongoDB driver is installed on the machine that will execute the PHP code.
+  - Make sure the latest MongoDB driver is installed on the machine that will execute the PHP code.
 - Composer must be available from the command line
 - Run `composer install`
 
 ## Basic usage
 
 - Review `php/demo` file, in particular (MongoDB) client/configuration options (the connection string and the database name)
-    - Make sure a MongoDB instance is running and accessible
-    - By default you can launch `docker run --name mongodb404 -d -p 27017:27017 mongo:4.0.4`
+  - Make sure a MongoDB instance is running and accessible
+  - By default you can launch `docker run --name mongodb404 -d -p 27017:27017 mongo:4.0.4`
 - Run `php bin/demo`
-    - This will create a new entry in User and BlogPost collections in `doctrine` (or another database name if you changed the value)
-    - You can review the data from Compass or MongoDB Shell
+  - This will create a new entry in User and BlogPost collections in `doctrine` (or another database name if you changed the value)
+  - You can review the data from Compass or MongoDB Shell
 
 ## History
 
